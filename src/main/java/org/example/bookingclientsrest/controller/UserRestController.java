@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class UserRestController {
-    private final UserRepository userRepository;
     private final UserService userService;
 
     @GetMapping("/{id}")
