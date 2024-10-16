@@ -160,9 +160,62 @@ class UserRestControllerTest {
 
     @Test
     void updateUser() {
+        User updatedUser = new User();
+        updatedUser.setId(2L);
+        updatedUser.setBalance(199.99);
+
+        User afterPut = new User();
+        afterPut.setId(2L);
+        afterPut.setBalance(199.99);
+        afterPut.setUsername(null);
+        afterPut.setPassword(null);
+
+        when(userService.updateUser(any(User.class),eq(2L))).thenReturn(ResponseEntity.ok(afterPut));
+
+
+        try {
+            mockMvc.perform(put("/users/change/{id}", 2L)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(updatedUser)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value(2))
+                    .andExpect(jsonPath("$.balance").value(199.99))
+                    .andExpect(jsonPath("$.username").value((Object) null))
+                    .andExpect(jsonPath("$.password").value((Object) null))
+                    .andDo(print());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        verify(userService, times(1)).updateUser(any(User.class), eq(2L));
     }
 
     @Test
     void patchUser() {
+        User updatedUser = new User();
+        updatedUser.setBalance(199.99);
+
+        User afterPatch = new User();
+        afterPatch.setId(2L);
+        afterPatch.setBalance(199.99);
+        afterPatch.setUsername("Anton");
+        afterPatch.setPassword("password");
+
+        when(userService.partialUpdateUser(any(User.class), eq(2L))).thenReturn(ResponseEntity.ok(afterPatch));
+
+        try {
+            mockMvc.perform(patch("/users/update/{id}", 2L)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(updatedUser)))
+                    .andExpect(jsonPath("$.id").value(2))
+                    .andExpect(jsonPath("$.username").value("Anton"))
+                    .andExpect(jsonPath("$.password").value("password"))
+                    .andExpect(jsonPath("$.balance").value(199.99))
+                    .andDo(print());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        verify(userService, times(1)).partialUpdateUser(any(User.class), eq(2L));
     }
 }
