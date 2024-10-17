@@ -172,7 +172,6 @@ class UserRestControllerTest {
 
         when(userService.updateUser(any(User.class),eq(2L))).thenReturn(ResponseEntity.ok(afterPut));
 
-
         try {
             mockMvc.perform(put("/users/change/{id}", 2L)
                             .contentType(MediaType.APPLICATION_JSON)
