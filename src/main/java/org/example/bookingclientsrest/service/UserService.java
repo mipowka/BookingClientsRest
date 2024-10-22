@@ -1,6 +1,7 @@
 package org.example.bookingclientsrest.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.bookingclientsrest.exception.UserNotFoundException;
 import org.example.bookingclientsrest.model.User;
 import org.example.bookingclientsrest.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     public List<User> getAllUsers() {

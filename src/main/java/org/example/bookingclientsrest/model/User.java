@@ -22,4 +22,7 @@ public class User {
     private String password;
     private Double balance;
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private Roles role;
 }

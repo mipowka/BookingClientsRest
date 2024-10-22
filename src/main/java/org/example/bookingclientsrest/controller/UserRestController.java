@@ -3,7 +3,6 @@ package org.example.bookingclientsrest.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.bookingclientsrest.model.User;
-import org.example.bookingclientsrest.repository.UserRepository;
 import org.example.bookingclientsrest.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
